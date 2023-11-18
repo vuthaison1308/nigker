@@ -14,7 +14,6 @@ spawn(function()
                 end
             end
         end)
-    end
     elseif _G.Team == "Pirate" then 
         spawn(function()
             while wait() do
@@ -28,7 +27,6 @@ spawn(function()
                 end
             end
         end)
-    end
     else 
         spawn(function()
             while wait() do
