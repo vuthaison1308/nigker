@@ -8,7 +8,7 @@ spawn(function()
     repeat wait() until game.Players.LocalPlayer.PlayerGui:FindFirstChild("Main");
     repeat wait() until game:GetService("Players")
     repeat wait() until game:GetService("Players").LocalPlayer.Character:FindFirstChild("Energy")
-wait(1)
+    wait(1)
     if game:GetService("Players").LocalPlayer.PlayerGui.Main:FindFirstChild("ChooseTeam") then
         repeat wait()
             if game:GetService("Players").LocalPlayer.PlayerGui:WaitForChild("Main").ChooseTeam.Visible == true then
