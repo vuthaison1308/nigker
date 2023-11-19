@@ -1,4 +1,7 @@
 spawn(function()
+    if _G.JoinTeam == nil then
+        _G.JoinTeam = "Pirate"
+    end
     repeat wait() until game.Players
     repeat wait() until game.Players.LocalPlayer
     repeat wait() until game.ReplicatedStorage
@@ -9,25 +12,26 @@ spawn(function()
     repeat wait() until game:GetService("Players")
     repeat wait() until game:GetService("Players").LocalPlayer.Character:FindFirstChild("Energy")
     wait(1)
-    if game:GetService("Players").LocalPlayer.PlayerGui.Main:FindFirstChild("ChooseTeam") then
-        repeat wait()
-            if game:GetService("Players").LocalPlayer.PlayerGui:WaitForChild("Main").ChooseTeam.Visible == true then
-                if _G.Team == "Pirate" then
-                    for i, v in pairs(getconnections(game:GetService("Players").LocalPlayer.PlayerGui.Main.ChooseTeam.Container.Pirates.Frame.ViewportFrame.TextButton.Activated)) do                                                                                                
-                        v.Function()
-                    end
-                elseif _G.Team == "Marine" then
-                    for i, v in pairs(getconnections(game:GetService("Players").LocalPlayer.PlayerGui.Main.ChooseTeam.Container.Marines.Frame.ViewportFrame.TextButton.Activated)) do                                                                                                
-                        v.Function()
-                    end
-                else
-                    for i, v in pairs(getconnections(game:GetService("Players").LocalPlayer.PlayerGui.Main.ChooseTeam.Container.Pirates.Frame.ViewportFrame.TextButton.Activated)) do                                                                                                
-                        v.Function()
-                    end
-                end
-            end
-        until game.Players.LocalPlayer.Team ~= nil and game:IsLoaded()
+    repeat fask.wait()
+    if not game.Players.LocalPlayer.PlayerGui.Main:FindFirstChild("ChooseTeam") then
+        break;
     end
+    ChooseTeam = game:GetService("Players").LocalPlayer.PlayerGui:FindFirstChild("ChooseTeam",true)
+    UIController = game:GetService("Players").LocalPlayer.PlayerGui:FindFirstChild("UIController",true)
+    if UIController and ChooseTeam then
+        for i,v in pairs(getgc()) do
+            if type(v) == "function" and getfenv(v).script == UIController then
+                local constant = getconstants(v)
+                pcall(function()
+                    if constant[1] == _G.JoinTeam.."s" and #constant == 1 then
+                        v(_G.JoinTeam.."s")
+                    end
+                end)
+            end
+        end
+    end
+    wait(1)
+until game.Players.LocalPlayer.Team ~= nil and game:IsLoaded()
 )
 spawn(function()
     while wait(2) do
